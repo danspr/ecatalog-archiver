@@ -1,0 +1,7 @@
+.basic-subscription::before {
+    background-color: rgb(35, 149, 35) !important;
+}
+
+.pro-subscription::before {
+    background-color: rgb(214, 34, 34) !important;
+}
