@@ -10,6 +10,10 @@ $routes->get('/', 'Home::dashboardView');
 /** Dashboard routes */
 $routes->get('/dashboard', 'Home::dashboardView');
 
+/** Auth routes */
+$routes->get('/login', 'Auth::loginView');
+$routes->get('/logout', 'Auth::logout');
+
 /** User routes */
 $routes->get('/user', 'User::index');
 

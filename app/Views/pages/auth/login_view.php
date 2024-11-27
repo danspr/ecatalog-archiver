@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-nav-layout="vertical" data-vertical-style="overlay" data-theme-mode="light" data-header-styles="light" data-menu-styles="light" data-toggled="close">
+<html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="color" data-toggled="close" style="--primary-rgb: 0, 90, 0;">
 
 <head>
     <!-- Meta Data -->
@@ -12,7 +12,7 @@
 	<meta name="keywords" content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
 
     <!-- Favicon -->
-    <link rel="icon" href="<?= base_url() ?>assets/images/brand-logos/smarteoq-favicon.png" type="image/x-icon">
+    <link rel="icon" href="<?= base_url() ?>assets/images/brand-logos/app-favicon.png" type="image/x-icon">
     <!-- Main Theme Js -->
     <script src="<?= base_url() ?>assets/js/authentication-main.js"></script>
     <!-- Bootstrap Css -->
@@ -35,11 +35,10 @@
                         <p class="h5 fw-semibold mb-2 text-center">Sign In</p>
                         <div class="mb-5 d-flex justify-content-center">
                             <a href="index.html">
-                                <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-light-logo.png" alt="logo" class="desktop-logo">
-                                <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-logo.png" alt="logo" class="desktop-dark">
+                                <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="desktop-logo">
+                                <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-logo.png" alt="logo" class="desktop-dark">
                             </a>
                         </div>
-                        <!-- <p class="mb-4 text-muted op-7 fw-normal text-center">Welcome to SmartEOQ</p> -->
                         <div class="row gy-3">
                             <div class="col-xl-12">
                                 <label for="signin-username" class="form-label text-default">Username</label>
