@@ -11,11 +11,11 @@
             <div class="header-element">
                 <div class="horizontal-logo">
                     <a href="index.html" class="header-logo">
-                    <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-logo.png" alt="logo" class="desktop-logo">
-                    <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-toggle-black-logo.png" alt="logo" class="toggle-logo">
-                    <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-logo.png" alt="logo" class="desktop-dark">
-                    <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-toggle-black-logo.png" alt="logo" class="toggle-dark">
-                            </a>
+                        <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="desktop-logo">
+                        <img src="<?= base_url() ?>assets/images/brand-logos/app-light-toggle-logo.png" alt="logo" class="toggle-logo">
+                        <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-logo.png" alt="logo" class="desktop-dark">
+                        <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-toggle-logo.png" alt="logo" class="toggle-dark">
+                    </a>
                 </div>
             </div>
             <!-- End::header-element -->

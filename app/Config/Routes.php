@@ -7,12 +7,15 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::dashboardView');
 
-/** Dashboard routes */
-$routes->get('/dashboard', 'Home::dashboardView');
-
 /** Auth routes */
 $routes->get('/login', 'Auth::loginView');
 $routes->get('/logout', 'Auth::logout');
+
+/** Dashboard routes */
+$routes->get('/dashboard', 'Home::dashboardView');
+
+/** Report routes */
+$routes->get('/report', 'Report::index');
 
 /** User routes */
 $routes->get('/user', 'User::index');
@@ -39,4 +42,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
         $routes->post('current-user', 'User::getCurrentUser');
     });
 
+    /** Report */
+    $routes->group('report', static function ($routes) {
+        $routes->get('list', 'Report::getReportList');
+    });
 });

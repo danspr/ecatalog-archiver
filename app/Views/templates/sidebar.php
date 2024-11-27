@@ -5,7 +5,7 @@
 <div class="main-sidebar-header">
     <a href="<?= base_url() ?>" class="header-logo">
         <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="desktop-logo">
-        <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="toggle-logo">
+        <img src="<?= base_url() ?>assets/images/brand-logos/app-light-toggle-logo.png" alt="logo" class="toggle-logo">
         <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-logo.png" alt="logo" class="desktop-dark">
         <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-toggle-logo.png" alt="logo" class="toggle-dark">
     </a>

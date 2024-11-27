@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class User extends BaseController
+class Report extends BaseController
 {
 
     public function __construct()
@@ -13,17 +13,16 @@ class User extends BaseController
     
     public function index()
     {
-        $pageName = 'User Management';
+        $pageName = 'Report';
         $pageView = [
             'pageName' => $pageName,
         ];
-
-        $contents = view('pages/user/user_view', $pageView);
+        $contents = view('pages/report/report_view', $pageView);
         $data = [
             ... $this->defaultDataView(),
-            'pageTitle' => 'User Management | ' . getAppName(),
+            'pageTitle' => 'Report | ' . getAppName(),
             'contents' => $contents,
-            'vueScript' => 'assets/js/vue/app.user.js',
+            'vueScript' => 'assets/js/vue/app.report.js',
         ];
 
         return view('templates/main_view', $data);

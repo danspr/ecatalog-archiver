@@ -13,7 +13,7 @@ class Auth extends BaseController
     {
         $data = [
             'pageTitle' => 'Sign In | ' . getAppName(),
-            'vueScript' => 'assets/js/vue/smarteoq.login.js',
+            'vueScript' => 'assets/js/vue/app.login.js',
         ];
         return view('pages/auth/login_view', $data);
     }

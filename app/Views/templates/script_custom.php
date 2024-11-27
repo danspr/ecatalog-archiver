@@ -1,7 +1,7 @@
 <script src="<?= base_url() ?>assets/js/libs/jquery-3.7.1.min.js" type="text/javascript"></script>
 <script src="<?= base_url() ?>assets/js/libs/toastr.min.js" type="text/javascript"></script>
 <script src="<?= base_url() ?>assets/libs/moment/min/moment.min.js"></script>
-<script src="<?= base_url() ?>assets/js/vue/smarteoq.constants.js" type="text/javascript"></script>
+<script src="<?= base_url() ?>assets/js/vue/app.constants.js" type="text/javascript"></script>
 
 <!-- Datatables Cdn -->
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -13,6 +13,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+ <!-- Date & Time Picker JS -->
+ <script src="<?= base_url() ?>assets/libs/flatpickr/flatpickr.min.js"></script>
 
 <!-- Vue JS -->
 <?php if(ENVIRONMENT === 'development'): ?>
