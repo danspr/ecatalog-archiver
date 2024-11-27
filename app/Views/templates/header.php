@@ -10,7 +10,7 @@
             <!-- Start::header-element -->
             <div class="header-element">
                 <div class="horizontal-logo">
-                    <a href="index.html" class="header-logo">
+                    <a href="<?= base_url() ?>" class="header-logo">
                         <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="desktop-logo">
                         <img src="<?= base_url() ?>assets/images/brand-logos/app-light-toggle-logo.png" alt="logo" class="toggle-logo">
                         <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-logo.png" alt="logo" class="desktop-dark">

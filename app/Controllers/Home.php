@@ -11,8 +11,8 @@ class Home extends BaseController
 
     public function dashboardView()
     {
-        // $auth = new Auth();
-        // $auth->isSessionExist();
+        $auth = new Auth();
+        $auth->isSessionExist();
 
         $pageName = 'Dashboard';
         $pageView = [
@@ -24,7 +24,7 @@ class Home extends BaseController
             ... $this->defaultDataView(),
             'pageTitle' => 'Dashboard | ' . getAppName(),
             'contents' => $contents,
-            // 'vueScript' => 'assets/js/vue/smarteoq.goods.js',
+            'vueScript' => 'assets/js/vue/app.dashboard.js',
         ];
 
         return view('templates/main_view', $data);
