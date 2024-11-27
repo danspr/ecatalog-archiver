@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="dark" data-toggled="close">
+<html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="color" data-toggled="close" style="--primary-rgb: 0, 90, 0;">
     <?= view('templates/metadata', ['pageTitle' => $pageTitle]) ?>
     
 <body>
