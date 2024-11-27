@@ -4,10 +4,10 @@
 <!-- Start::main-sidebar-header -->
 <div class="main-sidebar-header">
     <a href="<?= base_url() ?>" class="header-logo">
-        <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-logo.png" alt="logo" class="desktop-logo">
-        <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-toggle-logo.png" alt="logo" class="toggle-logo">
-        <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-logo.png" alt="logo" class="desktop-dark">
-        <img src="<?= base_url() ?>assets/images/brand-logos/smarteoq-toggle-logo.png" alt="logo" class="toggle-dark">
+        <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="desktop-logo">
+        <img src="<?= base_url() ?>assets/images/brand-logos/app-light-logo.png" alt="logo" class="toggle-logo">
+        <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-logo.png" alt="logo" class="desktop-dark">
+        <img src="<?= base_url() ?>assets/images/brand-logos/app-dark-toggle-logo.png" alt="logo" class="toggle-dark">
     </a>
 </div>
 <!-- End::main-sidebar-header -->

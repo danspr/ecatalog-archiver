@@ -9,7 +9,7 @@
 	<meta name="keywords" content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
     
     <!-- Favicon -->
-    <link rel="icon" href="<?= base_url() ?>assets/images/brand-logos/smarteoq-favicon.png" type="image/x-icon">
+    <link rel="icon" href="<?= base_url() ?>assets/images/brand-logos/app-favicon.png" type="image/x-icon">
     <!-- Choices JS -->
     <script src="<?= base_url() ?>assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
 
