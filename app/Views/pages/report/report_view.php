@@ -84,7 +84,7 @@
                                     <td>{{ item.file_name }}</td>
                                     <td>{{ item.created }}</td>
                                     <td>
-                                        <button @click="getUserDetail(item.id)" class="btn btn-primary-light btn-icon btn-sm" title="Download"><i class="ri-download-cloud-fill"></i></button>
+                                        <button @click="downloadReport(item.id)" class="btn btn-primary-light btn-icon btn-sm" title="Download"><i class="ri-download-cloud-fill"></i></button>
                                     </td>
                                 </tr>
                             </tbody>

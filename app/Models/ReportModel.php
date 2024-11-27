@@ -14,4 +14,8 @@ class ReportModel extends Model
     public function getReportList($where){
         return $this->select('id, file_name, file_path, created')->where($where)->findAll();
     }
+
+    public function getReportById($id){
+        return $this->select('id, file_name, file_path, created')->where('id', $id)->first();
+    }
 }

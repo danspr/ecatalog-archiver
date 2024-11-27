@@ -73,5 +73,17 @@ createApp({
                 axiosErrorCallback(error);
             })
         },
+        downloadReport(id){
+            let URL = `${baseURL}api/report/${id}/download`;
+            axios.get(URL, { headers: axiosHeader })
+            .then(function (response) {
+                if (response.status == 200) {
+                    window.open(URL, '_blank');
+                }
+            })
+            .catch(function (error) {
+                axiosErrorCallback(error);
+            })
+        }
     }
 }).mount('#app-wrapper')

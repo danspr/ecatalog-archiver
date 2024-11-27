@@ -45,6 +45,24 @@ class Report extends \App\Controllers\BaseController
         }
     }
 
+    public function downloadFile($id){
+        try {
+            $report = $this->reportModel->getReportById($id);
+            if(!$report){
+                return $this->failNotFound('File not found');
+            }
+
+            $filePath = WRITEPATH . $report['file_path'];
+            if (!file_exists($filePath)) {
+                return $this->failNotFound($filePath);
+            }
+
+            return $this->response->download($filePath, null)->setFileName($report['file_name']);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
     private function reportValidation($params){
         $rules = [
             'id' => [
