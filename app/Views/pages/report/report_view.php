@@ -17,17 +17,17 @@
 
         <!-- Start::row-1 -->
         <div class="row">
-            <div class="col-xl-4">
+            <div class="col-xl-6">
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Filter
+                            Parameter
                         </div>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Start Date</b></label>
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Tanggal Mulai</b></label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-3 col-form-label"><b>End Date</b></label>
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Tanggal Akhir</b></label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
@@ -44,10 +44,34 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Satuan Kerja</b></label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" v-model="form.satuan_kerja">
+                                        <option value="all">-- All --</option>
+                                        <option value="tni_ad">TNI AD</option>
+                                        <option value="tni_al">TNI AL</option>
+                                        <option value="tni_au">TNI AU</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="row mb-3">
                                 <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                                 <div class="col-sm-9">
-                                    <button type="button" @click="getReportList(false)" class="form-control btn btn-primary">Search</button>
+                                    <!-- <button type="button" id="generate-report" @click="exportData" class="form-control btn btn-primary">Generate Report</button> -->
+
+                                    <button class="form-control btn btn-primary" type="button" @click="exportData()" id="generate-report-button">                                               
+                                        <span class="d-flex align-items-center">
+                                            <span class="flex-grow-1 ms-2 btn-text">
+                                                Generate Report
+                                            </span>
+                                            <span class="spinner-border flex-shrink-0" role="status" style="display:none;">
+                                                <span class="visually-hidden btn-text">Generate Report</span>
+                                            </span>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                             
@@ -64,7 +88,7 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Report Archive
+                            History
                         </div>
                        
                     </div>

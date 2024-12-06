@@ -3,10 +3,11 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
-            urlGetReportList: `${baseURL}api/report/list`,               
+            urlGetReportList: `${baseURL}api/report/list`,           
+            urlExportData: `${baseURL}api/report/export`,           
             dataList: [],
-            form: { start_date: '', end_date: '' },
-            buttonSubmitId: 'createButton'
+            form: { start_date: '', end_date: '', satuan_kerja: 'all' },
+            buttonSubmitId: 'generate-report-button'
         }
     },
     mounted() {
@@ -56,7 +57,7 @@ createApp({
         },
         getReportList(init) {
             let self = this
-            let URL = this.urlGetReportList + `?start_date=${this.form.start_date}&end_date=${this.form.end_date}`
+            let URL = this.urlGetReportList;
             axios.get(URL, { headers: axiosHeader })
             .then(function (response) {
                 if (response.status == 200) {
@@ -71,6 +72,24 @@ createApp({
             })
             .catch(function (error) {
                 axiosErrorCallback(error);
+            })
+        },
+        exportData(){
+            let self = this;
+            showLoadingButton(this.buttonSubmitId);
+            axios.post(this.urlExportData, this.form, { headers: axiosHeader })
+            .then(function (response) {
+                if (response.status == 200) {
+                    let data = (response.data).data;
+                    window.open(data.download_url, '_blank');
+                }
+                self.getReportList(false);
+            })
+            .catch(function (error) {
+                axiosErrorCallback(error);
+            })
+            .finally(() => {
+                hideLoadingButton(this.buttonSubmitId, 'Generate Report');
             })
         },
         downloadReport(id){

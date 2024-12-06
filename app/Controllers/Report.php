@@ -13,7 +13,7 @@ class Report extends BaseController
     
     public function index()
     {
-        $pageName = 'Report';
+        $pageName = 'Generate ePurchasing Report';
         $pageView = [
             'pageName' => $pageName,
         ];

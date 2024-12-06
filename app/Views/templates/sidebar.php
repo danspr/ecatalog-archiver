@@ -38,7 +38,7 @@
             <li class="slide">
                 <a href="<?= base_url('report') ?>" active-path="report" class="side-menu__item">
                     <i class="bx bxs-report side-menu__icon"></i>
-                    <span class="side-menu__label">Report</span>
+                    <span class="side-menu__label">ePurchasing Report</span>
                 </a>
             </li>
             <!-- End::slide -->
