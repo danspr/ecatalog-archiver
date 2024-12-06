@@ -24,13 +24,12 @@
                                 <div class="row">
                                     <div class="col-6 pe-0">
                                         <p class="mb-2">
-                                            <span class="fs-16">Total Files</span>
+                                            <span class="fs-16">Total Records</span>
                                         </p>
                                         <p class="mb-2 fs-12">
-                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">1117</span>
+                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ result.totalRecords.transaction }}</span>
                                             <span class="d-block fs-10 fw-semibold text-muted">Items</span>
                                         </p>
-                                        <a href="<?= base_url('goods') ?>" class="fs-12 mb-0 text-primary">Show full stats<i class="ti ti-chevron-right ms-1"></i></a>
                                     </div>
                                     <div class="col-6">
                                         <!-- <p class="badge bg-success-transparent float-end d-inline-flex"><i class="ti ti-caret-up me-1"></i>42%</p> -->
@@ -46,13 +45,12 @@
                                 <div class="row">
                                     <div class="col-6 pe-0">
                                         <p class="mb-2">
-                                            <span class="fs-16">Total Files This Month</span>
+                                            <span class="fs-16">TNI AD Records</span>
                                         </p>
                                         <p class="mb-2 fs-12">
-                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">90</span>
+                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ result.totalRecords.tniAD }}</span>
                                             <span class="d-block fs-10 fw-semibold text-muted">Items</span>
                                         </p>
-                                        <a href="<?= base_url('goods') ?>" class="fs-12 mb-0 text-primary">Show full stats<i class="ti ti-chevron-right ms-1"></i></a>
                                     </div>
                                     <div class="col-6">
                                         <!-- <p class="badge bg-success-transparent float-end d-inline-flex"><i class="ti ti-caret-up me-1"></i>42%</p> -->
@@ -68,13 +66,12 @@
                                 <div class="row">
                                     <div class="col-6 pe-0">
                                         <p class="mb-2">
-                                            <span class="fs-16">Total Files Today</span>
+                                            <span class="fs-16">File Generated</span>
                                         </p>
                                         <p class="mb-2 fs-12">
-                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">6</span>
+                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ result.totalRecords.download }}</span>
                                             <span class="d-block fs-10 fw-semibold text-muted">Items</span>
                                         </p>
-                                        <a href="<?= base_url('goods') ?>" class="fs-12 mb-0 text-primary">Show full stats<i class="ti ti-chevron-right ms-1"></i></a>
                                     </div>
                                     <div class="col-6">
                                         <!-- <p class="badge bg-success-transparent float-end d-inline-flex"><i class="ti ti-caret-up me-1"></i>42%</p> -->
@@ -91,41 +88,22 @@
                     <div class="col-xl-12">
                         <div class="card custom-card overflow-hidden">
                             <div class="card-header justify-content-between">
-                                <div class="card-title">Backup Overview</div>
+                                <div class="card-title">Overview by Satuan Kerja</div>
                                 <div class="dropdown">
-                                    <a href="javascript:void(0);" class="p-2 fs-12 text-muted" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        View All<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a class="dropdown-item" href="javascript:void(0);">Last Week</a></li>
-                                        <li><a class="dropdown-item" href="javascript:void(0);">Last Month</a></li>
-                                        <li><a class="dropdown-item" href="javascript:void(0);">Last Year</a></li>
-                                    </ul>
+                                    <select class="form-select" @change="showOverview()" v-model="form.overviewPeriod">
+                                        <option value="last_week">Last Week</option>
+                                        <option value="last_month">Last Month</option>
+                                        <option value="last_year">Last Year</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="card-body p-0">
-                                <div class="row border-bottom border-block-end-dashed">
-                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="p-3 border-sm-end border-inline-end-dashed text-sm-start text-center">
-                                            <p class="fs-20 fw-semibold mb-0">1,117</p>
-                                            <p class="mb-0 text-muted">Total Backup Job</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="p-3 border-sm-end border-inline-end-dashed text-sm-start text-center">
-                                            <p class="fs-20 fw-semibold mb-0"><span class="basic-subscription">742</span></p>
-                                            <p class="mb-0 text-muted">Success</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="p-3 text-sm-start text-center">
-                                            <p class="fs-20 fw-semibold mb-0"><span class="pro-subscription">259</span></p>
-                                            <p class="mb-0 text-muted">Failed</p>
-                                        </div>
+                                <div id="subscriptionOverview" class="px-3 mt-sm-0 mt-3" v-show="!chart.loading"></div>
+                                <div v-show="chart.loading" class="text-center p-5">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
-                                <div id="subscriptionOverview" class="px-3 mt-sm-0 mt-3"></div>
                             </div>
                         </div>
                     </div>
@@ -141,8 +119,12 @@
                         <button type="button" class="btn btn-sm btn-light">View All</button>
                     </div>
                     <div class="card-body">
-                        <ul id="recent-activity-list" class="list-unstyled mb-0 crm-recent-activity">
-                        </ul>
+                        <ul id="recent-activity-list" class="list-unstyled mb-0 crm-recent-activity" v-show="!activity.loading"></ul>
+                        <div v-show="activity.loading" class="text-center p-5">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

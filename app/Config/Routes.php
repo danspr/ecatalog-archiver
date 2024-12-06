@@ -53,4 +53,11 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
      $routes->group('scrap', static function ($routes) {
         $routes->get('now', 'Scrapping::pdfScapper');
     });
+
+     /** Dashboard */
+     $routes->group('dashboard', static function ($routes) {
+        $routes->get('total-records', 'Dashboard::getTotalRecords');
+        $routes->get('overview/(:any)', 'Dashboard::getOverview/$1');
+        $routes->get('activity', 'Dashboard::getRecentActivity/$1');
+    });
 });

@@ -3,31 +3,92 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
-          
+            urlGetTotalRecords: `${baseURL}api/dashboard/total-records`,
+            urlGetOverview: `${baseURL}api/dashboard/overview/`,
+            urlGetActivity: `${baseURL}api/dashboard/activity`,
+            result: {
+                totalRecords: { transaction: 0, tniAD: 0, download: 0 },
+                overview: { label: [], tniAD: [], tniAU: [], tniAL: [] },
+                activity: []
+            },
+            form: { overviewPeriod: 'last_week' },
+            chart: { overview: null, loading: false },
+            activity: { loading: false}
         }
     },
     mounted() {
-        this.showOverview()
+        this.initView()
+        this.showTotalRecords()
+        this.showOverview(true)
         this.showRecentActivity()
     },
     methods: {
+        initView(){
+            let options = this.getOverviewChartOptions();
+            this.chart.overview = new ApexCharts(document.querySelector("#subscriptionOverview"), options);
+            this.chart.overview.render();
+        },
+        showTotalRecords(){
+            axios.get(this.urlGetTotalRecords, { headers: axiosHeader })
+            .then(response => {
+                if(response.status == 200) {
+                    let data = (response.data).data;
+                    this.result.totalRecords.transaction = data.total_transaction;
+                    this.result.totalRecords.tniAD = data.total_tniad;
+                    this.result.totalRecords.download = data.total_download;
+                }
+            })
+            .catch(error => {
+                axiosErrorCallback(error)
+            })
+        },
         showOverview(){
+            this.chart.loading = true;
+            let self = this;
+            let URL = this.urlGetOverview + this.form.overviewPeriod;
+            axios.get(URL, { headers: axiosHeader })
+            .then(response => {
+                if(response.status == 200) { 
+                    let data = (response.data).data;
+                    self.result.overview.label = data.label;
+                    self.result.overview.tniAD = data.tni_ad;
+                    self.result.overview.tniAU = data.tni_au;
+                    self.result.overview.tniAL = data.tni_al;
+
+                    self.chart.loading = false;
+                    let options = self.getOverviewChartOptions();
+                    self.chart.overview.updateOptions(options)
+                }
+            })
+            .catch(error => {
+                axiosErrorCallback(error)
+                console.log(error)
+            })
+            .finally(() => {
+                this.chart.loading = false;
+            })
+        },
+        getOverviewChartOptions() {
             var options = {
                 series: [
                     {
-                        name: "Success",
-                        data: [9, 8, 3, 10, 8, 9, 7, 2, 10, 6] // Higher values
+                        name: "TNI AD",
+                        data: this.result.overview.tniAD
                     },
                     {
-                        name: "Failed",
-                        data: [1, 2, 7, 0, 2, 1, 3, 8, 0, 4] // Corresponding lower values
+                        name: "TNI AU",
+                        data: this.result.overview.tniAU
+                    },
+                    {
+                        name: "TNI AL",
+                        data: this.result.overview.tniAL
                     }
                 ],
                 chart: {
                     toolbar: {
                         show: false
                     },
-                    height: 285,
+                    height: 400,
                     type: 'line',
                     zoom: {
                         enabled: false
@@ -49,10 +110,10 @@ createApp({
                     enabled: false
                 },
                 stroke: {
-                    width: [2, 2],
-                    curve: ['smooth', 'smooth'],
+                    width: [2, 2, 2],
+                    curve: ['smooth', 'smooth', 'smooth'],
                     lineCap: 'butt',
-                    dashArray: [0, 0]
+                    dashArray: [0, 0, 0]
                 },
                 title: {
                     text: undefined,
@@ -105,9 +166,7 @@ createApp({
                 },
                 xaxis: {
                     type: 'day',
-                    categories: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan',
-                        '10 Jan', '11 Jan', '12 Jan'
-                    ],
+                    categories: this.result.overview.label,
                     axisBorder: {
                         show: true,
                         color: 'rgba(119, 119, 142, 0.05)',
@@ -157,86 +216,32 @@ createApp({
                         }
                     ]
                 },
-                colors: ["rgb(35, 149, 35)", "rgb(214, 34, 34)"],
+                colors: ["rgb(35, 149, 35)", "rgb(128, 196, 233)", "rgb(10, 57, 129)"],
             };
-            var chart1 = new ApexCharts(document.querySelector("#subscriptionOverview"), options);
-            chart1.render();
+            return options;
         },
         showRecentActivity(){
-            const activities = [
-                {
-                    "type": "user",
-                    "activity": "Logged in to the application",
-                    "result": "success",
-                    "datetime": "2024-11-27 08:15:23",
-                    "user": "admin"
-                },
-                {
-                    "type": "system",
-                    "activity": "Backup job completed for database",
-                    "result": "success",
-                    "datetime": "2024-11-27 08:30:10",
-                    "user": "system"
-                },
-                {
-                    "type": "user",
-                    "activity": "Uploaded new document",
-                    "result": "success",
-                    "datetime": "2024-11-27 09:00:45",
-                    "user": "john.doe"
-                },
-                {
-                    "type": "system",
-                    "activity": "Scheduled cleanup job failed",
-                    "result": "failed",
-                    "datetime": "2024-11-27 09:15:00",
-                    "user": "system"
-                },
-                {
-                    "type": "user",
-                    "activity": "Attempted unauthorized access",
-                    "result": "failed",
-                    "datetime": "2024-11-27 10:05:12",
-                    "user": "guest"
-                },
-                {
-                    "type": "system",
-                    "activity": "Backup job completed for user files",
-                    "result": "success",
-                    "datetime": "2024-11-27 10:30:40",
-                    "user": "system"
-                },
-                {
-                    "type": "user",
-                    "activity": "Reset password",
-                    "result": "success",
-                    "datetime": "2024-11-27 11:00:20",
-                    "user": "jane.smith"
-                },
-                {
-                    "type": "system",
-                    "activity": "Disk space monitoring job failed",
-                    "result": "failed",
-                    "datetime": "2024-11-27 11:45:15",
-                    "user": "system"
-                },
-                {
-                    "type": "user",
-                    "activity": "Logged out of the application",
-                    "result": "success",
-                    "datetime": "2024-11-27 12:10:05",
-                    "user": "admin"
-                },
-                {
-                    "type": "system",
-                    "activity": "Generated monthly report",
-                    "result": "success",
-                    "datetime": "2024-11-27 12:42:50",
-                    "user": "system"
-                },
-            ];
-        
+            this.activity.loading = true;
+            let self = this;
+            axios.get(this.urlGetActivity, { headers: axiosHeader })
+            .then(response => {
+                self.activity.loading = false;
+                if(response.status == 200) {
+                    let data = (response.data).data;
+                    self.result.activity = data;
+                    self.showActivittyHTML();
+                }
+            })
+            .catch(error => {
+                axiosErrorCallback(error)
+            })
+            .finally(() => {
+                this.activity.loading = false;
+            })
+        },
+        showActivittyHTML(){
             const activityList = document.getElementById('recent-activity-list');
+            const activities = this.result.activity;
         
             activities.forEach(activity => {
                 const listItem = document.createElement('li');
@@ -249,16 +254,17 @@ createApp({
                             </span>
                         </div>
                         <div class="crm-timeline-content">
-                            <span>${activity.activity}</span>
+                            <span>${activity.detail}</span>
                             <span class="d-block fs-12 text-muted">${activity.datetime}</span>
                         </div>
                         <div class="flex-fill text-end">
-                            <span class="d-block text-muted fs-11 op-7">${activity.user}</span>
+                            <span class="d-block text-muted fs-11 op-7">${activity.username}</span>
                         </div>
                     </div>
                 `;
                 activityList.appendChild(listItem);
             });
         }
+        
     }
 }).mount('#app-wrapper')

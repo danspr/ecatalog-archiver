@@ -18,6 +18,7 @@ class Report extends \App\Controllers\BaseController
         $this->auth->isSessionExist();
         $this->reportModel = new ReportModel;
         $this->transactionModel = new TransactionModel;
+        $this->activity = new ActivityLog;
         $this->session = session();
     }
 
@@ -46,8 +47,10 @@ class Report extends \App\Controllers\BaseController
                 return $this->failNotFound($filePath);
             }
 
+            $this->activity->insertActivityLog('success', 'Download Report', 'User download report successfully.');
             return $this->response->download($filePath, null)->setFileName($report['file_name']);
         } catch (\Exception $e) {
+            $this->activity->insertActivityLog('error', 'Download Report', 'User download report failed: ' . $e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
@@ -100,6 +103,8 @@ class Report extends \App\Controllers\BaseController
                 'file_path' => 'uploads/'.$fileName,
             ];
             $id = $this->reportModel->insert($reportData);
+
+            $this->activity->insertActivityLog('success', 'Generate Report', 'Report generated successfully.');
             $response = [
                 'status' => 'success',
                 'data' => [
@@ -110,6 +115,7 @@ class Report extends \App\Controllers\BaseController
             ];
             return $this->respond($response);
         } catch (\Exception $e) {
+            $this->activity->insertActivityLog('error', 'Generate Report', 'Report generated failed: '.$e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }

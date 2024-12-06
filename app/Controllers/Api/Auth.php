@@ -13,6 +13,7 @@ class Auth extends \App\Controllers\BaseController
     {
         $this->session = session();
         $this->userModel = new UserModel;
+        $this->activity = new ActivityLog;
     }
 
     public function isSessionExist(){
@@ -39,6 +40,7 @@ class Auth extends \App\Controllers\BaseController
             }
             $this->createSession($user['id']);
             
+            $this->activity->insertActivityLog('success', 'Login', 'User logged in successfully.');
             $response = [
                 'status' => 'success',
                 'message' => getString('success.login')
@@ -51,6 +53,7 @@ class Auth extends \App\Controllers\BaseController
     }
 
     public function signout(){
+        $this->activity->insertActivityLog('success', 'Logout', 'User logged out successfully.');
         $this->session->destroy();
         $response = [
             'status' => 'success',

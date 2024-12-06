@@ -75,6 +75,8 @@ class User extends \App\Controllers\BaseController
             }
 
             $this->userModel->insertUser($insertData);
+
+            $this->activity->insertActivityLog('success', 'Add User', 'User added successfully.');
             $response = [
                 'status' => 'success',
                 'message' => 'User added successfully'
@@ -82,6 +84,7 @@ class User extends \App\Controllers\BaseController
             return $this->respond($response);
 
         } catch (\Exception $e) {
+            $this->activity->insertActivityLog('error', 'Add User', 'User added failed: ' . $e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
@@ -113,6 +116,7 @@ class User extends \App\Controllers\BaseController
                 $this->session->set('role', $data['role']);
             }
 
+            $this->activity->insertActivityLog('success', 'Update User', 'User updated successfully.');
             $response = [
                 'status' => 'success',
                 'message' => 'User updated successfully'
@@ -120,6 +124,7 @@ class User extends \App\Controllers\BaseController
             return $this->respond($response);
 
         } catch (\Exception $e) {
+            $this->activity->insertActivityLog('error', 'Update User', 'User updated failed: ' . $e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
@@ -133,12 +138,15 @@ class User extends \App\Controllers\BaseController
 
             $data = $this->request->getPost();
             $this->userModel->deleteUser(['id' => $data['id']]);
+
+            $this->activity->insertActivityLog('success', 'Delete User', 'User deleted successfully.');
             $response = [
                 'status' => 'success',
                 'message' => 'User deleted successfully'
             ];
             return $this->respond($response);
         } catch (\Exception $e) {
+            $this->activity->insertActivityLog('error', 'Delete User', 'User deleted failed: ' . $e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
@@ -152,12 +160,15 @@ class User extends \App\Controllers\BaseController
 
             $data = $this->request->getPost();
             $this->userModel->updateUser(['password' => $this->auth->getPasswordHash($data['password'])], ['id' => $data['id']]);
+
+            $this->activity->insertActivityLog('success', 'Change Password', 'Password changed successfully.');
             $response = [
                 'status' => 'success',
                 'message' => 'Password changed successfully'
             ];
             return $this->respond($response);
         } catch (\Exception $e) {
+            $this->activity->insertActivityLog('error', 'Change Password', 'Password changed failed: ' . $e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
