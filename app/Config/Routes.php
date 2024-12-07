@@ -20,6 +20,9 @@ $routes->get('/report', 'Report::index');
 /** User routes */
 $routes->get('/user', 'User::index');
 
+/** Activity routes */
+$routes->get('/activity', 'Activity::index');
+
 /**
  * API routes
  */
@@ -59,5 +62,10 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
         $routes->get('total-records', 'Dashboard::getTotalRecords');
         $routes->get('overview/(:any)', 'Dashboard::getOverview/$1');
         $routes->get('activity', 'Dashboard::getRecentActivity/$1');
+    });
+
+    /** Activity Log */
+    $routes->group('activity', static function ($routes) {
+        $routes->get('list', 'ActivityLog::getActivityLog');
     });
 });

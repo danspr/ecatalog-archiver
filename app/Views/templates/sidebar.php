@@ -56,6 +56,12 @@
                     <span class="side-menu__label">User Management</span>
                 </a>
             </li>
+            <li class="slide">
+                <a href="<?= base_url('activity') ?>" active-path="activity"  class="side-menu__item">
+                    <i class="bx bx-history side-menu__icon"></i>
+                    <span class="side-menu__label">Activity Log</span>
+                </a>
+            </li>
             <!-- End::slide -->
 
              <!-- Start::slide -->
