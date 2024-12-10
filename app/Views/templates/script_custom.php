@@ -18,7 +18,7 @@
  <script src="<?= base_url() ?>assets/libs/flatpickr/flatpickr.min.js"></script>
 
 <!-- Apex Charts JS -->
-<script src="../assets/libs/apexcharts/apexcharts.min.js"></script>
+<script src="<?= base_url() ?>assets/libs/apexcharts/apexcharts.min.js"></script>
 
 <!-- Vue JS -->
 <?php if(ENVIRONMENT === 'development'): ?>
