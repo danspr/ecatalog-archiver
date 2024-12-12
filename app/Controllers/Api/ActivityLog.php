@@ -21,8 +21,8 @@ class ActivityLog extends \App\Controllers\BaseController
 
             $data = $this->request->getGet();
             $where = [
-                'datetime >=' => $data['start_date'],
-                'datetime <=' => $data['end_date']
+                'cast(datetime as date) >=' => $data['start_date'],
+                'cast(datetime as date) <=' => $data['end_date']
             ];
 
             $activityLogModel = new ActivityLogModel();

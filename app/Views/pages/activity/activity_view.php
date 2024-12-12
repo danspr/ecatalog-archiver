@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table text-nowrap table-bordered" id="activityTable">
+                        <table class="table table-bordered" id="activityTable">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
