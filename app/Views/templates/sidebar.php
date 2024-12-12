@@ -42,8 +42,15 @@
                 </a>
             </li>
             <!-- End::slide -->
+
+            <!-- Start::slide -->
+            <li class="slide">
+                <a href="<?= base_url('sirup') ?>" active-path="sirup" class="side-menu__item">
+                    <i class="bx bxs-report side-menu__icon"></i>
+                    <span class="side-menu__label">SIRUP Report</span>
+                </a>
             </li>
-            <!-- End::slide -->
+            <!-- End::slide --> 
 
             <!-- Start::slide__category -->
             <li class="slide__category"><span class="category-name">Setting</span></li>

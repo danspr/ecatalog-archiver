@@ -3,11 +3,10 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
-            urlGetReportList: `${baseURL}api/report/list`,           
-            urlGetPaketNameList: `${baseURL}api/report/paket-list`,           
-            urlExportData: `${baseURL}api/report/export`,           
-            dataList: [],
-            form: { nama_paket: '' },
+            urlGetReportList: `${baseURL}api/report/list`,                    
+            urlExportData: `${baseURL}api/sirup/export`,           
+            dataList: [], dataYear: [],
+            form: { tahun: '', report: 'rekap' },
             buttonSubmitId: 'generate-report-button'
         }
     },
@@ -16,44 +15,17 @@ createApp({
         this.getReportList(true)
     },
     methods: {
+        generateYear(start, end) {
+            let years = [];
+            for (let year = end; year >= start; year--) {
+                years.push(year);
+            }
+            return years;
+        },
         initView() {
-            let self = this;
-            $('#paket-name').select2({
-                placeholder: 'Search for a package',
-                allowClear: true,
-                ajax: {
-                    url: this.urlGetPaketNameList,
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            nama_paket: params.term // search term
-                        };
-                    },
-                    processResults: function(data) {
-                        let resultData = data.data;
-                        return {
-                            results: resultData.map(function(item) {
-                                return {
-                                    id: item.nama_paket, // Use the unique ID from your data
-                                    text: item.nama_paket // Display name
-                                };
-                            })
-                        };
-                    },
-                    cache: true
-                },
-                minimumInputLength: 3
-            });
-
-            $('#paket-name').on('select2:select', function(e) {
-                var selectedData = e.params.data;
-                self.form.nama_paket = selectedData.id
-            });
-
-            $('#paket-name').on('select2:clear', function() {
-                self.form.nama_paket = '';
-            });
+            let currentYear = new Date().getFullYear();
+            this.dataYear = this.generateYear(2019, currentYear);
+            this.form.tahun = currentYear
         },
         initTable(){
             $('#report-table').ready(function(){
@@ -85,7 +57,7 @@ createApp({
         },
         getReportList(init) {
             let self = this
-            let URL = this.urlGetReportList + "?type=epurchasing";
+            let URL = this.urlGetReportList + "?type=sirup";
             axios.get(URL, { headers: axiosHeader })
             .then(function (response) {
                 if (response.status == 200) {

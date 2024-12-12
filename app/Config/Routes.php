@@ -17,6 +17,9 @@ $routes->get('/dashboard', 'Home::dashboardView');
 /** Report routes */
 $routes->get('/report', 'Report::index');
 
+/** Activity routes */
+$routes->get('/sirup', 'Sirup::index');
+
 /** User routes */
 $routes->get('/user', 'User::index');
 
@@ -68,5 +71,11 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
     /** Activity Log */
     $routes->group('activity', static function ($routes) {
         $routes->get('list', 'ActivityLog::getActivityLog');
+    });
+
+    /** Activity Log */
+    $routes->group('sirup', static function ($routes) {
+        $routes->post('export', 'Sirup::exportToExcel');
+        $routes->get('(:num)/download', 'Report::downloadFile/$1');
     });
 });

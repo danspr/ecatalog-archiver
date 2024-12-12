@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Report extends BaseController
+class Sirup extends BaseController
 {
 
     public function __construct()
@@ -13,16 +13,16 @@ class Report extends BaseController
     
     public function index()
     {
-        $pageName = 'Generate ePurchasing Report';
+        $pageName = 'Generate SIRUP Report';
         $pageView = [
             'pageName' => $pageName,
         ];
-        $contents = view('pages/report/report_view', $pageView);
+        $contents = view('pages/sirup/sirup_view', $pageView);
         $data = [
             ... $this->defaultDataView(),
-            'pageTitle' => 'ePurchasing Report | ' . getAppName(),
+            'pageTitle' => 'SIRUP Report | ' . getAppName(),
             'contents' => $contents,
-            'vueScript' => 'assets/js/vue/app.report.js',
+            'vueScript' => 'assets/js/vue/app.sirup.js',
         ];
 
         return view('templates/main_view', $data);

@@ -20,11 +20,13 @@ class Report extends \App\Controllers\BaseController
         $this->transactionModel = new TransactionModel;
         $this->activity = new ActivityLog;
         $this->session = session();
+        $this->folderPath = 'uploads/epurchasing/';
     }
 
     public function getReportList(){
         try {
-            $result = $this->reportModel->getReportList();
+            $reportType = $this->request->getGet('type');
+            $result = $this->reportModel->getReportList(['report_type' => $reportType]);
             $response = [
                 'status' => 'success',
                 'data' => $result
@@ -82,7 +84,11 @@ class Report extends \App\Controllers\BaseController
 
             $data = $this->request->getPost();
             $fileName = 'epurchasing_transaction_' . $data['nama_paket'] . '_' . time() . '.xlsx';
-            $filePath = WRITEPATH . 'uploads/' . $fileName;
+            $filePath = WRITEPATH . $this->folderPath . $fileName;
+
+            if (!file_exists(WRITEPATH . $this->folderPath)) {
+                mkdir(WRITEPATH . $this->folderPath, 0777, true);
+            }
 
             $transactionData = $this->transactionModel->getTransaction($data['nama_paket']);
             $spreadsheet = new Spreadsheet();
@@ -108,7 +114,7 @@ class Report extends \App\Controllers\BaseController
 
             $reportData = [
                 'file_name' => $fileName,
-                'file_path' => 'uploads/'.$fileName,
+                'file_path' => $this->folderPath.$fileName,
             ];
             $id = $this->reportModel->insert($reportData);
 
@@ -118,6 +124,7 @@ class Report extends \App\Controllers\BaseController
                 'data' => [
                     'id' => $id,
                     'file_name' => $fileName,
+                    'report_type' => 'epurchasing',
                     'download_url' => base_url('api/report/'.$id.'/download')
                 ]
             ];
