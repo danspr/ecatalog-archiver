@@ -48,6 +48,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
     /** Report */
     $routes->group('report', static function ($routes) {
         $routes->get('list', 'Report::getReportList');
+        $routes->get('paket-list', 'Report::getNamaPaket');
         $routes->post('export', 'Report::exportToExcel');
         $routes->get('(:num)/download', 'Report::downloadFile/$1');
     });

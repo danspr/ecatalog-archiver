@@ -20,6 +20,9 @@
 <!-- Apex Charts JS -->
 <script src="<?= base_url() ?>assets/libs/apexcharts/apexcharts.min.js"></script>
 
+<!-- Select2 JS -->
+<script src="<?= base_url() ?>assets/js/libs/select2.min.js" type="text/javascript"></script>
+
 <!-- Vue JS -->
 <?php if(ENVIRONMENT === 'development'): ?>
     <script src="<?= base_url() ?>assets/js/libs/vue.global.js"></script>

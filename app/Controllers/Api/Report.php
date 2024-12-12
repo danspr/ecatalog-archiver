@@ -35,6 +35,24 @@ class Report extends \App\Controllers\BaseController
         }
     }
 
+    public function getNamaPaket(){
+        try {
+            $namaPaket = '';
+            if($this->request->getGet('nama_paket')){
+                $namaPaket = $this->request->getGet('nama_paket');
+            }
+
+            $result = $this->transactionModel->getNamaPaket($namaPaket);
+            $response = [
+                'status' => 'success',
+                'data' => $result
+            ];
+            return $this->respond($response);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
     public function downloadFile($id){
         try {
             $report = $this->reportModel->getReportById($id);
@@ -57,26 +75,16 @@ class Report extends \App\Controllers\BaseController
 
     public function exportToExcel(){
         try {
-            $params = ['start_date', 'end_date'];
+            $params = ['nama_paket'];
             if(!$this->validate($this->reportValidation($params))){
                 return $this->fail($this->validator->getErrors());
             } 
 
             $data = $this->request->getPost();
-            $satuanKerja = '';
-            if($data['satuan_kerja'] == 'tni_ad'){
-                $satuanKerja = 'TNI AD';
-            } else if($data['satuan_kerja'] == 'tni_al'){
-                $satuanKerja = 'TNI AL';
-            } else if($data['satuan_kerja'] == 'tni_au'){
-                $satuanKerja = 'TNI AU';
-            }
-
-            $strSatuanKerja = ($data['satuan_kerja'] == 'all') ? 'Semua Satuan Kerja' : $satuanKerja;
-            $fileName = 'epurchasing_transaction_' . $data['start_date'] . '_to_' . $data['end_date'] .  '_' . $strSatuanKerja . '_' . time() . '.xlsx';
+            $fileName = 'epurchasing_transaction_' . $data['nama_paket'] . '_' . time() . '.xlsx';
             $filePath = WRITEPATH . 'uploads/' . $fileName;
 
-            $transactionData = $this->transactionModel->getTransaction($data['start_date'], $data['end_date'], $satuanKerja);
+            $transactionData = $this->transactionModel->getTransaction($data['nama_paket']);
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
             $headers = [
@@ -85,7 +93,7 @@ class Report extends \App\Controllers\BaseController
                 'Nama Manufaktur', 'Kategori LV1', 'Kategori LV2', 'Nama Produk',
                 'Jenis Produk', 'Nama Penyedia', 'Status UMKM', 'Nama Pelaksana Pekerjaan',
                 'Status Paket', 'Kuantitas Produk', 'Harga Satuan Produk',
-                'Harga Ongkos Kirim', 'Total Harga Produk'
+                'Harga Ongkos Kirim', 'Total Harga Produk', 'TKDN', 'BMP', 'TKDN BMP'
             ];
             $sheet->fromArray($headers, NULL, 'A1');
 
@@ -150,6 +158,12 @@ class Report extends \App\Controllers\BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'End Date is required',
+                ]
+            ],
+            'nama_paket' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nama Paket is required',
                 ]
             ],
         ];

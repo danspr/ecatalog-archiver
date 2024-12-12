@@ -48,6 +48,9 @@
      <!-- Choices Css -->
      <link rel="stylesheet" href="<?= base_url() ?>assets/libs/choices.js/public/assets/styles/choices.min.css">
 
+      <!-- Select2 Css -->
+    <link href="<?= base_url() ?>assets/css/libs/select2.min.css" rel="stylesheet"  type="text/css" />
+
     <!-- Custom CSS -->
     <link href="<?= base_url() ?>assets/css/custom-styles.css" rel="stylesheet"  type="text/css" />
 

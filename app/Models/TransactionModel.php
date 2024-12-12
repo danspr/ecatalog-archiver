@@ -9,18 +9,46 @@ class TransactionModel extends Model
     protected $table = 'epurchasing_transaction';
     protected $primaryKey = 'id';
 
-    public function getTransaction($startDate, $endDate, $satuanKerja){
-        $fieldSelected = 'pengelola,instansi_pembeli,satuan_kerja,jenis_katalog,etalase,tanggal_paket,nomor_paket,nama_paket,rup_id,nama_manufaktur,kategori_lv1,kategori_lv2,nama_produk,jenis_produk,nama_penyedia,status_umkm,nama_pelaksana_pekerjaan,status_paket,kuantitas_produk,harga_satuan_produk,harga_ongkos_kirim,total_harga_produk';
+    public function getTransaction($paketName){
         $db = \Config\Database::connect();
-        $builder = $db->table('epurchasing_transaction');
-        $builder->select($fieldSelected);
-        $builder->where([
-            'cast(tanggal_paket as date) >= ' => $startDate,
-            'cast(tanggal_paket as date) <=' => $endDate,
-        ]);
-        $builder->like('satuan_kerja', $satuanKerja, 'both');
-        $query = $builder->get();
-        return $query->getResultArray();
+        $query = "SELECT
+            a.pengelola,
+            a.instansi_pembeli,
+            a.satuan_kerja,
+            a.jenis_katalog,
+            a.etalase,
+            a.tanggal_paket,
+            a.nomor_paket,
+            a.nama_paket,
+            a.rup_id,nama_manufaktur,
+            a.kategori_lv1,
+            a.kategori_lv2,
+            a.nama_produk,
+            a.jenis_produk,
+            a.nama_penyedia,
+            a.status_umkm,
+            a.nama_pelaksana_pekerjaan,
+            a.status_paket,
+            a.kuantitas_produk,
+            a.harga_satuan_produk,
+            a.harga_ongkos_kirim,
+            a.total_harga_produk,
+            b.tkdn,b.bmp,b.tkdn_bmp FROM 
+            epurchasing_transaction a
+            LEFT JOIN product b ON a.nama_produk=b.product_name AND a.nama_penyedia=b.supplier_name
+            where a.nama_paket = ?
+            order by a.tanggal_paket asc";
+
+        $result = $db->query($query, [$paketName])->getResultArray();
+        return $result;
+    }
+
+    public function getNamaPaket($paketName){
+        $db = \Config\Database::connect();
+        $query = "SELECT distinct nama_paket from epurchasing_transaction 
+                where nama_paket like ? order by nama_paket asc";
+        $result = $db->query($query, ['%' . $paketName . '%'])->getResultArray();
+        return $result;
     }
 
     public function getDashboardOverview($period){

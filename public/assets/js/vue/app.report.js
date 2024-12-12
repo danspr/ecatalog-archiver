@@ -4,9 +4,10 @@ createApp({
     data() {
         return {
             urlGetReportList: `${baseURL}api/report/list`,           
+            urlGetPaketNameList: `${baseURL}api/report/paket-list`,           
             urlExportData: `${baseURL}api/report/export`,           
             dataList: [],
-            form: { start_date: '', end_date: '', satuan_kerja: 'all' },
+            form: { nama_paket: '' },
             buttonSubmitId: 'generate-report-button'
         }
     },
@@ -16,20 +17,42 @@ createApp({
     },
     methods: {
         initView() {
-            this.form.start_date = moment().format('YYYY-MM-DD');
-            this.form.end_date = moment().format('YYYY-MM-DD');
-            flatpickr("#start-date", {
-                altInput: true,
-                altFormat: "F j, Y",
-                dateFormat: "Y-m-d",
-                defaultDate: moment().format('YYYY-MM-DD'),
+            let self = this;
+            $('#paket-name').select2({
+                placeholder: 'Search for a package',
+                allowClear: true,
+                ajax: {
+                    url: this.urlGetPaketNameList,
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            nama_paket: params.term // search term
+                        };
+                    },
+                    processResults: function(data) {
+                        let resultData = data.data;
+                        return {
+                            results: resultData.map(function(item) {
+                                return {
+                                    id: item.nama_paket, // Use the unique ID from your data
+                                    text: item.nama_paket // Display name
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 3
             });
 
-            flatpickr("#end-date", {
-                altInput: true,
-                altFormat: "F j, Y",
-                dateFormat: "Y-m-d",
-                defaultDate: moment().format('YYYY-MM-DD'),
+            $('#paket-name').on('select2:select', function(e) {
+                var selectedData = e.params.data;
+                self.form.nama_paket = selectedData.id
+            });
+
+            $('#paket-name').on('select2:clear', function() {
+                self.form.nama_paket = '';
             });
         },
         initTable(){
@@ -44,12 +67,17 @@ createApp({
                         },
                         {
                             targets: 2,
+                            width: '15%',
                             render: function (data, type, row) {
                                 if (type === 'display' || type === 'filter') {
                                     return moment(data).format('D MMMM YYYY HH:mm');
                                 }
                                 return data;
                             },
+                        },
+                        {
+                            targets: 3,
+                            width: '5%',
                         },
                     ],
                 });
