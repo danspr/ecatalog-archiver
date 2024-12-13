@@ -24,7 +24,7 @@ createApp({
         },
         initView() {
             let currentYear = new Date().getFullYear();
-            this.dataYear = this.generateYear(2019, currentYear);
+            this.dataYear = this.generateYear(2019, currentYear + 1);
             this.form.tahun = currentYear
         },
         initTable(){

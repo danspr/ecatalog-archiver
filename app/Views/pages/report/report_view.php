@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <form>
                             <div class="row mb-4">
-                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Nama Paket</b></label>
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Nomor Paket</b></label>
                                 <div class="col-sm-9">
                                     <select id="paket-name" class="form-control"></select>
                                 </div>

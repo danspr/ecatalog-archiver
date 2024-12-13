@@ -37,14 +37,14 @@ class Report extends \App\Controllers\BaseController
         }
     }
 
-    public function getNamaPaket(){
+    public function getNomorPaket(){
         try {
-            $namaPaket = '';
-            if($this->request->getGet('nama_paket')){
-                $namaPaket = $this->request->getGet('nama_paket');
+            $nomorPaket = '';
+            if($this->request->getGet('nomor_paket')){
+                $nomorPaket = $this->request->getGet('nomor_paket');
             }
 
-            $result = $this->transactionModel->getNamaPaket($namaPaket);
+            $result = $this->transactionModel->getNamaPaket($nomorPaket);
             $response = [
                 'status' => 'success',
                 'data' => $result
@@ -77,20 +77,20 @@ class Report extends \App\Controllers\BaseController
 
     public function exportToExcel(){
         try {
-            $params = ['nama_paket'];
+            $params = ['nomor_paket'];
             if(!$this->validate($this->reportValidation($params))){
                 return $this->fail($this->validator->getErrors());
             } 
 
             $data = $this->request->getPost();
-            $fileName = 'epurchasing_transaction_' . $data['nama_paket'] . '_' . time() . '.xlsx';
+            $fileName = 'epurchasing_transaction_' . $data['nomor_paket'] . '_' . time() . '.xlsx';
             $filePath = WRITEPATH . $this->folderPath . $fileName;
 
             if (!file_exists(WRITEPATH . $this->folderPath)) {
                 mkdir(WRITEPATH . $this->folderPath, 0777, true);
             }
 
-            $transactionData = $this->transactionModel->getTransaction($data['nama_paket']);
+            $transactionData = $this->transactionModel->getTransaction($data['nomor_paket']);
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
             $headers = [
@@ -167,10 +167,10 @@ class Report extends \App\Controllers\BaseController
                     'required' => 'End Date is required',
                 ]
             ],
-            'nama_paket' => [
+            'nomor_paket' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Nama Paket is required',
+                    'required' => 'Nomor Paket is required',
                 ]
             ],
         ];

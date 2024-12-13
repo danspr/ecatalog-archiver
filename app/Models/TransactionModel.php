@@ -9,7 +9,7 @@ class TransactionModel extends Model
     protected $table = 'epurchasing_transaction';
     protected $primaryKey = 'id';
 
-    public function getTransaction($paketName){
+    public function getTransaction($nomor_paket){
         $db = \Config\Database::connect();
         $query = "SELECT
             a.pengelola,
@@ -36,18 +36,18 @@ class TransactionModel extends Model
             b.tkdn,b.bmp,b.tkdn_bmp FROM 
             epurchasing_transaction a
             LEFT JOIN product b ON a.nama_produk=b.product_name AND a.nama_penyedia=b.supplier_name
-            where a.nama_paket = ?
+            where a.nomor_paket = ?
             order by a.tanggal_paket asc";
 
-        $result = $db->query($query, [$paketName])->getResultArray();
+        $result = $db->query($query, [$nomor_paket])->getResultArray();
         return $result;
     }
 
-    public function getNamaPaket($paketName){
+    public function getNamaPaket($nomorPaket){
         $db = \Config\Database::connect();
-        $query = "SELECT distinct nama_paket from epurchasing_transaction 
-                where nama_paket like ? order by nama_paket asc";
-        $result = $db->query($query, ['%' . $paketName . '%'])->getResultArray();
+        $query = "SELECT distinct nomor_paket from epurchasing_transaction 
+                where nomor_paket like ? order by nomor_paket asc";
+        $result = $db->query($query, ['%' . $nomorPaket . '%'])->getResultArray();
         return $result;
     }
 

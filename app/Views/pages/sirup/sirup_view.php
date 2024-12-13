@@ -42,6 +42,7 @@
                                         <option value="rekap">Rekap</option>
                                         <option value="penyedia">Penyedia</option>
                                         <option value="swakelola">Swakelola</option>
+                                        <option value="penyedia_dalam_swakelola">Penyedia Dalam Swakelola</option>
                                     </select>
                                 </div>
                             </div>

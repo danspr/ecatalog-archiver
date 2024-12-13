@@ -7,7 +7,7 @@ createApp({
             urlGetPaketNameList: `${baseURL}api/report/paket-list`,           
             urlExportData: `${baseURL}api/report/export`,           
             dataList: [],
-            form: { nama_paket: '' },
+            form: { nomor_paket: '' },
             buttonSubmitId: 'generate-report-button'
         }
     },
@@ -27,7 +27,7 @@ createApp({
                     delay: 250,
                     data: function(params) {
                         return {
-                            nama_paket: params.term // search term
+                            nomor_paket: params.term // search term
                         };
                     },
                     processResults: function(data) {
@@ -35,8 +35,8 @@ createApp({
                         return {
                             results: resultData.map(function(item) {
                                 return {
-                                    id: item.nama_paket, // Use the unique ID from your data
-                                    text: item.nama_paket // Display name
+                                    id: item.nomor_paket, // Use the unique ID from your data
+                                    text: item.nomor_paket // Display name
                                 };
                             })
                         };
@@ -48,11 +48,11 @@ createApp({
 
             $('#paket-name').on('select2:select', function(e) {
                 var selectedData = e.params.data;
-                self.form.nama_paket = selectedData.id
+                self.form.nomor_paket = selectedData.id
             });
 
             $('#paket-name').on('select2:clear', function() {
-                self.form.nama_paket = '';
+                self.form.nomor_paket = '';
             });
         },
         initTable(){
