@@ -41,9 +41,9 @@
     <link href="<?= base_url() ?>assets/css/libs/toastr.min.css" rel="stylesheet"  type="text/css" />
 
     <!-- Datatables CDN -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/libs/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/libs/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/libs/buttons.bootstrap5.min.css">
 
      <!-- Choices Css -->
      <link rel="stylesheet" href="<?= base_url() ?>assets/libs/choices.js/public/assets/styles/choices.min.css">
