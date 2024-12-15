@@ -5,6 +5,7 @@ namespace App\Controllers\Api;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\ReportModel;
 use App\Models\TransactionModel;
+use App\Models\SirupModel;
 use App\Models\ActivityLogModel;
 
 class Dashboard extends \App\Controllers\BaseController
@@ -18,15 +19,16 @@ class Dashboard extends \App\Controllers\BaseController
         $this->reportModel = new ReportModel;
         $this->transactionModel = new TransactionModel;
         $this->activityModel = new ActivityLogModel;
+        $this->sirupModel = new SirupModel;
         $this->session = session();
     }
 
     public function getTotalRecords(){
         try {
             $result = [
-                'total_transaction' => $this->transactionModel->countAll(),
-                'total_tniad' => $this->transactionModel->like('satuan_kerja', 'TNI AD', 'both')->countAllResults(),
-                'total_download' => $this->reportModel->countAll()
+                'total_transaction' => $this->transactionModel->like('satuan_kerja', 'TNI AD', 'both')->countAllResults(),
+                'total_penyedia' => $this->sirupModel->getSirupPenyediaCount(date('Y')),
+                'total_swakelola' => $this->sirupModel->getSirupSwakelolaCount(date('Y')),
             ];
             $response = [
                 'status' => 'success',

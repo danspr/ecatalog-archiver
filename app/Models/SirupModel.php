@@ -86,4 +86,16 @@ class SirupModel extends Model
         return $result;
     }
 
+    public function getSirupPenyediaCount($tahun){
+        $db = \Config\Database::connect();
+        $builder = $db->table('sirup_penyedia');
+        return $builder->where('tahun',$tahun)->countAllResults();
+    }
+
+    public function getSirupSwakelolaCount($tahun){
+        $db = \Config\Database::connect();
+        $builder = $db->table('sirup_swakelola');
+        return $builder->where('tahun',$tahun)->countAllResults();
+    }
+
 }

@@ -22,13 +22,13 @@
                         <div class="card custom-card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6 pe-0">
+                                    <div class="col-12 pe-0">
                                         <p class="mb-2">
-                                            <span class="fs-16">Total Records</span>
+                                            <span class="fs-16">Total ePurchasing</span>
                                         </p>
                                         <p class="mb-2 fs-12">
-                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ result.totalRecords.transaction }}</span>
-                                            <span class="d-block fs-10 fw-semibold text-muted">Items</span>
+                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ formatNumber(result.totalRecords.transaction) }}</span>
+                                            <span class="d-block fs-10 fw-semibold text-muted">Items in E-Katalog {{ currentYear }}</span>
                                         </p>
                                     </div>
                                     <div class="col-6">
@@ -43,13 +43,13 @@
                         <div class="card custom-card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6 pe-0">
+                                    <div class="col-12 pe-0">
                                         <p class="mb-2">
-                                            <span class="fs-16">TNI AD Records</span>
+                                            <span class="fs-16">Total Paket Penyedia</span>
                                         </p>
                                         <p class="mb-2 fs-12">
-                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ result.totalRecords.tniAD }}</span>
-                                            <span class="d-block fs-10 fw-semibold text-muted">Items</span>
+                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ formatNumber(result.totalRecords.penyedia) }}</span>
+                                            <span class="d-block fs-10 fw-semibold text-muted">Items in SIRUP {{ currentYear }}</span>
                                         </p>
                                     </div>
                                     <div class="col-6">
@@ -64,13 +64,13 @@
                         <div class="card custom-card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6 pe-0">
+                                    <div class="col-12 pe-0">
                                         <p class="mb-2">
-                                            <span class="fs-16">File Generated</span>
+                                            <span class="fs-16">Total Paket Swakelola</span>
                                         </p>
                                         <p class="mb-2 fs-12">
-                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ result.totalRecords.download }}</span>
-                                            <span class="d-block fs-10 fw-semibold text-muted">Items</span>
+                                            <span class="fs-25 fw-semibold lh-1 vertical-bottom mb-0">{{ formatNumber(result.totalRecords.swakelola) }}</span>
+                                            <span class="d-block fs-10 fw-semibold text-muted">Items in SIRUP {{ currentYear }}</span>
                                         </p>
                                     </div>
                                     <div class="col-6">
@@ -88,7 +88,7 @@
                     <div class="col-xl-12">
                         <div class="card custom-card overflow-hidden">
                             <div class="card-header justify-content-between">
-                                <div class="card-title">Overview by Satuan Kerja</div>
+                                <div class="card-title">Overview E-Purchasing by Satuan Kerja</div>
                                 <div class="dropdown">
                                     <select class="form-select" @change="showOverview()" v-model="form.overviewPeriod">
                                         <option value="last_week">Last Week</option>
@@ -116,7 +116,7 @@
                         <div class="card-title">
                             Recent Activities
                         </div>
-                        <button type="button" class="btn btn-sm btn-light">View All</button>
+                        <a href="<?= base_url('activity') ?>" class="btn btn-sm btn-light">View All</a>
                     </div>
                     <div class="card-body">
                         <ul id="recent-activity-list" class="list-unstyled mb-0 crm-recent-activity" v-show="!activity.loading"></ul>

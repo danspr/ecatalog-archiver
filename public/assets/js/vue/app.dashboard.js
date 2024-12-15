@@ -7,13 +7,13 @@ createApp({
             urlGetOverview: `${baseURL}api/dashboard/overview/`,
             urlGetActivity: `${baseURL}api/dashboard/activity`,
             result: {
-                totalRecords: { transaction: 0, tniAD: 0, download: 0 },
+                totalRecords: { transaction: 0, penyedia: 0, swakelola: 0 },
                 overview: { label: [], tniAD: [], tniAU: [], tniAL: [] },
                 activity: []
             },
             form: { overviewPeriod: 'last_week' },
             chart: { overview: null, loading: false },
-            activity: { loading: false}
+            activity: { loading: false}, currentYear: '',
         }
     },
     mounted() {
@@ -27,6 +27,7 @@ createApp({
             let options = this.getOverviewChartOptions();
             this.chart.overview = new ApexCharts(document.querySelector("#subscriptionOverview"), options);
             this.chart.overview.render();
+            this.currentYear = moment().format('YYYY');
         },
         showTotalRecords(){
             axios.get(this.urlGetTotalRecords, { headers: axiosHeader })
@@ -34,8 +35,8 @@ createApp({
                 if(response.status == 200) {
                     let data = (response.data).data;
                     this.result.totalRecords.transaction = data.total_transaction;
-                    this.result.totalRecords.tniAD = data.total_tniad;
-                    this.result.totalRecords.download = data.total_download;
+                    this.result.totalRecords.penyedia = data.total_penyedia;
+                    this.result.totalRecords.swakelola = data.total_swakelola;
                 }
             })
             .catch(error => {
@@ -254,7 +255,7 @@ createApp({
                             </span>
                         </div>
                         <div class="crm-timeline-content">
-                            <span>${activity.detail}</span>
+                            <span title="${activity.detail}">${activity.detail.slice(0, 150)}</span>
                             <span class="d-block fs-12 text-muted">${activity.datetime}</span>
                         </div>
                         <div class="flex-fill text-end">
@@ -264,6 +265,9 @@ createApp({
                 `;
                 activityList.appendChild(listItem);
             });
+        },
+        formatNumber(number){
+            return new Intl.NumberFormat().format(number);
         }
         
     }
