@@ -38,15 +38,27 @@ class Sirup extends \App\Controllers\BaseController
                 mkdir(WRITEPATH . $this->folderPath, 0777, true);
             }
           
-            $rowData = $this->sirupModel->getReportData($data['tahun'], $data['report']);
-            $spreadsheet = new Spreadsheet();
-            $sheet = $spreadsheet->getActiveSheet();
             $headers = $this->getReportHeaders($data['report']);
-            $sheet->fromArray($headers, NULL, 'A1');
+            $rowData1 = $this->sirupModel->getReportData($data['tahun'], $data['report']);
+            $rowData2 = $this->sirupModel->getReportData($data['tahun'], 'rekap_updated');
 
+            $spreadsheet = new Spreadsheet();
+            $sheet1 = $spreadsheet->getActiveSheet();
+            $sheet1->setTitle('Sirup Rekap');
+            $sheet1->fromArray($headers, NULL, 'A1');
             $row = 2;
-            foreach ($rowData as $entry) {
-                $sheet->fromArray(array_values($entry), NULL, 'A' . $row);
+            foreach ($rowData1 as $entry) {
+                $sheet1->fromArray(array_values($entry), NULL, 'A' . $row);
+                $row++;
+            }
+
+            $sheet2 = $spreadsheet->createSheet();
+            $sheet2->setTitle('Sirup Rekap (Updated)');
+            $sheet2->fromArray($headers, NULL, 'A1');
+            $sheet2->fromArray($headers, NULL, 'A1');
+            $row = 2;
+            foreach ($rowData2 as $entry) {
+                $sheet2->fromArray(array_values($entry), NULL, 'A' . $row);
                 $row++;
             }
 
@@ -56,6 +68,7 @@ class Sirup extends \App\Controllers\BaseController
             $reportData = [
                 'file_name' => $fileName,
                 'file_path' => $this->folderPath.$fileName,
+                'report_type' => 'sirup'
             ];
             $id = $this->reportModel->insert($reportData);
 
@@ -71,7 +84,7 @@ class Sirup extends \App\Controllers\BaseController
             ];
             return $this->respond($response);
         } catch (\Exception $e) {
-            $this->activity->insertActivityLog('error', 'Generate Report', 'Report generated failed: '.$e->getMessage());
+            $this->activity->insertActivityLog('error', 'Generate Report', 'Sirup Report generated failed: '.$e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
@@ -91,7 +104,11 @@ class Sirup extends \App\Controllers\BaseController
             return [
                 'Kode Satker', 'Nama Satker', 'Paket ID', 'Nama Paket', 'Kegiatan','Pagu', 'Tipe Swakelola', 'MAK'
             ];
-        }
+        } else if($report == 'penyedia_dalam_swakelola'){
+            return [
+                'Kode Satker', 'Nama Satker', 'Paket ID', 'Nama Paket', 'Pagu', 'Metode Pemilihan', 'Sumber Dana', 'MAK'
+            ];
+        } 
     }
 
     private function reportValidation($params){

@@ -166,7 +166,7 @@ class Report extends \App\Controllers\BaseController
             ];
             $id = $this->reportModel->insert($reportData);
 
-            $this->activity->insertActivityLog('success', 'Generate Report', 'Report generated successfully.');
+            $this->activity->insertActivityLog('success', 'Generate Report', 'ePurchasing report generated successfully.');
             $response = [
                 'status' => 'success',
                 'data' => [
@@ -178,7 +178,7 @@ class Report extends \App\Controllers\BaseController
             ];
             return $this->respond($response);
         } catch (\Exception $e) {
-            $this->activity->insertActivityLog('error', 'Generate Report', 'Report generated failed: '.$e->getMessage());
+            $this->activity->insertActivityLog('error', 'Generate Report', 'ePurchasing report generated failed: '.$e->getMessage());
             return $this->failServerError($e->getMessage());
         }
     }
