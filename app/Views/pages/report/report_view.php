@@ -27,12 +27,49 @@
                     <div class="card-body">
                         <form>
                             <div class="row mb-4">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Filter By</b></label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" v-model="form.filter">
+                                        <option value="nomor_paket">Nomor Paket</option>
+                                        <option value="satuan_kerja">Satuan Kerja</option>
+                                        <option value="tanggal">Tanggal</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4" v-show="form.filter=='nomor_paket'">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Nomor Paket</b></label>
                                 <div class="col-sm-9">
                                     <select id="paket-name" class="form-control"></select>
                                 </div>
                             </div>
+
+                            <div class="row mb-4" v-show="form.filter=='satuan_kerja'">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Satuan Kerja</b></label>
+                                <div class="col-sm-9">
+                                    <select id="satuan-kerja" class="form-control"></select>
+                                </div>
+                            </div>
                             
+                            <div class="row mb-3" v-show="form.filter=='tanggal'">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Tanggal Mulai</b></label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input type="text" class="form-control" id="start-date" v-model="form.start_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3" v-show="form.filter=='tanggal'">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label"><b>Tanggal Akhir</b></label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input type="text" class="form-control" id="end-date" v-model="form.end_date">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row mb-3">
                                 <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                                 <div class="col-sm-9">

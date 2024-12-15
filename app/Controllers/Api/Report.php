@@ -55,6 +55,24 @@ class Report extends \App\Controllers\BaseController
         }
     }
 
+    public function getSatuanKerja(){
+        try {
+            $satker = '';
+            if($this->request->getGet('nama')){
+                $satker = $this->request->getGet('nama');
+            }
+
+            $result = $this->transactionModel->getSatkerName($satker);
+            $response = [
+                'status' => 'success',
+                'data' => $result
+            ];
+            return $this->respond($response);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
     public function downloadFile($id){
         try {
             $report = $this->reportModel->getReportById($id);
@@ -77,20 +95,49 @@ class Report extends \App\Controllers\BaseController
 
     public function exportToExcel(){
         try {
-            $params = ['nomor_paket'];
+            $params = ['filter'];
+            if(!$this->validate($this->reportValidation($params))){
+                return $this->fail($this->validator->getErrors());
+            }
+
+            $filter = $this->request->getPost('filter');
+            if($filter == 'nomor_paket'){
+                $params = ['nomor_paket'];
+            } else if ($filter == 'satuan_kerja'){
+                $params = ['satuan_kerja'];
+            } else if ($filter == 'tanggal'){
+                $params = ['start_date', 'end_date'];
+            }
             if(!$this->validate($this->reportValidation($params))){
                 return $this->fail($this->validator->getErrors());
             } 
 
             $data = $this->request->getPost();
-            $fileName = 'epurchasing_transaction_' . $data['nomor_paket'] . '_' . time() . '.xlsx';
-            $filePath = WRITEPATH . $this->folderPath . $fileName;
+            $where = [];
+            if($filter == 'nomor_paket'){
+                $fileName = 'epurchasing_transaction_' . $data['nomor_paket'] . '_' . time() . '.xlsx';
+                $where = [
+                    'TRIM(nomor_paket)' => $data['nomor_paket']
+                ];
+            } else if ($filter == 'satuan_kerja'){
+                $fileName = 'epurchasing_transaction_' . $data['satuan_kerja'] . '_' . time() . '.xlsx';
+                $where = [
+                    'TRIM(satuan_kerja)' => trim($data['satuan_kerja'])
+                ];
+            } else if ($filter == 'tanggal'){
+                $fileName = 'epurchasing_transaction_' . $data['start_date'] . '_to_' . $data['end_date'] . '_' . time() . '.xlsx';
+                $where = [
+                    'cast(tanggal_paket as date) >= ' => $data['start_date'],
+                    'cast(tanggal_paket as date) <=' => $data['end_date']
+                ];
+            }
 
+            $filePath = WRITEPATH . $this->folderPath . $fileName;
             if (!file_exists(WRITEPATH . $this->folderPath)) {
                 mkdir(WRITEPATH . $this->folderPath, 0777, true);
             }
 
-            $transactionData = $this->transactionModel->getTransaction($data['nomor_paket']);
+            $transactionData = $this->transactionModel->getTransaction($where);
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
             $headers = [
@@ -115,6 +162,7 @@ class Report extends \App\Controllers\BaseController
             $reportData = [
                 'file_name' => $fileName,
                 'file_path' => $this->folderPath.$fileName,
+                'report_type' => 'epurchasing'
             ];
             $id = $this->reportModel->insert($reportData);
 
@@ -171,6 +219,18 @@ class Report extends \App\Controllers\BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Nomor Paket is required',
+                ]
+            ],
+            'filter' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Filter is required',
+                ]
+            ],
+            'satuan_kerja' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Satuan Kerja is required',
                 ]
             ],
         ];

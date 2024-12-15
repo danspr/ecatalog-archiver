@@ -9,38 +9,37 @@ class TransactionModel extends Model
     protected $table = 'epurchasing_transaction';
     protected $primaryKey = 'id';
 
-    public function getTransaction($nomor_paket){
+    public function getTransaction($where){
         $db = \Config\Database::connect();
-        $query = "SELECT
-            a.pengelola,
-            a.instansi_pembeli,
-            a.satuan_kerja,
-            a.jenis_katalog,
-            a.etalase,
-            a.tanggal_paket,
-            a.nomor_paket,
-            a.nama_paket,
-            a.rup_id,nama_manufaktur,
-            a.kategori_lv1,
-            a.kategori_lv2,
-            a.nama_produk,
-            a.jenis_produk,
-            a.nama_penyedia,
-            a.status_umkm,
-            a.nama_pelaksana_pekerjaan,
-            a.status_paket,
-            a.kuantitas_produk,
-            a.harga_satuan_produk,
-            a.harga_ongkos_kirim,
-            a.total_harga_produk,
-            b.tkdn,b.bmp,b.tkdn_bmp FROM 
-            epurchasing_transaction a
-            LEFT JOIN product b ON a.nama_produk=b.product_name AND a.nama_penyedia=b.supplier_name
-            where a.nomor_paket = ?
-            order by a.tanggal_paket asc";
-
-        $result = $db->query($query, [$nomor_paket])->getResultArray();
-        return $result;
+        $builder = $db->table('epurchasing_transaction a');
+        $builder->select('a.pengelola,
+                a.instansi_pembeli,
+                a.satuan_kerja,
+                a.jenis_katalog,
+                a.etalase,
+                a.tanggal_paket,
+                a.nomor_paket,
+                a.nama_paket,
+                a.rup_id,nama_manufaktur,
+                a.kategori_lv1,
+                a.kategori_lv2,
+                a.nama_produk,
+                a.jenis_produk,
+                a.nama_penyedia,
+                a.status_umkm,
+                a.nama_pelaksana_pekerjaan,
+                a.status_paket,
+                a.kuantitas_produk,
+                a.harga_satuan_produk,
+                a.harga_ongkos_kirim,
+                a.total_harga_produk,
+                b.tkdn,b.bmp,b.tkdn_bmp');
+        // $builder->from('epurchasing_transaction a');
+        $builder->join('product b', 'a.nama_produk=b.product_name AND a.nama_penyedia=b.supplier_name', 'LEFT');
+        $builder->where($where);
+        $builder->orderBy('a.tanggal_paket', 'ASC');
+        $query = $builder->get();
+        return $query->getResultArray();
     }
 
     public function getNamaPaket($nomorPaket){
@@ -48,6 +47,14 @@ class TransactionModel extends Model
         $query = "SELECT distinct nomor_paket from epurchasing_transaction 
                 where nomor_paket like ? order by nomor_paket asc";
         $result = $db->query($query, ['%' . $nomorPaket . '%'])->getResultArray();
+        return $result;
+    }
+
+    public function getSatkerName($satker){
+        $db = \Config\Database::connect();
+        $query = "SELECT distinct satuan_kerja from epurchasing_transaction 
+                where satuan_kerja like ? order by satuan_kerja asc";
+        $result = $db->query($query, ['%' . $satker . '%'])->getResultArray();
         return $result;
     }
 
