@@ -54,7 +54,7 @@ class SirupModel extends Model
 
     private function getSirupPenyedia($tahun){
         $db = \Config\Database::connect();
-        $query = "SELECT a.satker_id, b.satker_name, a.paket_id, a.paket_name, a.pagu, a.metode_pemilihan, a.sumber_dana, 
+        $query = "SELECT b.satker_code, b.satker_name, a.paket_id, a.paket_name, a.pagu, a.metode_pemilihan, a.sumber_dana, 
                 a.produk_dalam_negeri, a.usaha_kecil_koperasi, a.mak, a.jenis_pengadaan
                 from sirup_penyedia a
                 join sirup_rekap b on b.satker_id = a.satker_id
@@ -66,7 +66,7 @@ class SirupModel extends Model
 
     private function getSirupSwakelola($tahun){
         $db = \Config\Database::connect();
-        $query = "SELECT a.satker_id, b.satker_name, a.paket_id, a.paket_name, a.kegiatan, a.pagu, a.tipe_swakelola, a.mak
+        $query = "SELECT b.satker_code, b.satker_name, a.paket_id, a.paket_name, a.kegiatan, a.pagu, a.tipe_swakelola, a.mak
                 from sirup_swakelola a
                 join sirup_rekap b on b.satker_id = a.satker_id
                 where a.tahun = $tahun
