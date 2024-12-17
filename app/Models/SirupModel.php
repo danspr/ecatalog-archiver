@@ -57,7 +57,7 @@ class SirupModel extends Model
         $query = "SELECT b.satker_code, b.satker_name, a.paket_id, a.paket_name, a.pagu, a.metode_pemilihan, a.sumber_dana, 
                 a.produk_dalam_negeri, a.usaha_kecil_koperasi, a.mak, a.jenis_pengadaan
                 from sirup_penyedia a
-                join sirup_rekap b on b.satker_id = a.satker_id
+                join sirup_rekap b on b.satker_id = a.satker_id and b.tahun = $tahun
                 where a.tahun = $tahun
                 order by b.satker_name asc";
         $result = $db->query($query)->getResultArray();
@@ -68,7 +68,7 @@ class SirupModel extends Model
         $db = \Config\Database::connect();
         $query = "SELECT b.satker_code, b.satker_name, a.paket_id, a.paket_name, a.kegiatan, a.pagu, a.tipe_swakelola, a.mak
                 from sirup_swakelola a
-                join sirup_rekap b on b.satker_id = a.satker_id
+                join sirup_rekap b on b.satker_id = a.satker_id and b.tahun = $tahun
                 where a.tahun = $tahun
                 order by b.satker_name asc";
         $result = $db->query($query)->getResultArray();
@@ -79,7 +79,7 @@ class SirupModel extends Model
         $db = \Config\Database::connect();
         $query = "SELECT a.satker_id, b.satker_name, a.paket_id, a.paket_name, a.pagu, a.metode_pemilihan, a.sumber_dana, a.mak
                 from sirup_penyedia_dalam_swakelola a
-                join sirup_rekap b on b.satker_id = a.satker_id
+                join sirup_rekap b on b.satker_id = a.satker_id and b.tahun = $tahun
                 where a.tahun = $tahun
                 order by b.satker_name asc";
         $result = $db->query($query)->getResultArray();
