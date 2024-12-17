@@ -199,4 +199,12 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+    public function __construct() {
+        parent:: __construct();
+        
+        $root = 'http://'.$_SERVER['HTTP_HOST'];
+        $root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+        $this->baseURL = $root;
+    }
 }
