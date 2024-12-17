@@ -44,7 +44,7 @@ class Sirup extends \App\Controllers\BaseController
 
             $spreadsheet = new Spreadsheet();
             $sheet1 = $spreadsheet->getActiveSheet();
-            $sheet1->setTitle('Sirup Rekap (as is on SIRUP Rekap');
+            $sheet1->setTitle('Sirup Rekap (as is)');
             $sheet1->fromArray($headers, NULL, 'A1');
             $row = 2;
             foreach ($rowData1 as $entry) {
@@ -53,7 +53,7 @@ class Sirup extends \App\Controllers\BaseController
             }
 
             $sheet2 = $spreadsheet->createSheet();
-            $sheet2->setTitle('Sirup Rekap (Recalculated)');
+            $sheet2->setTitle('Sirup Rekap (recalculated)');
             $sheet2->fromArray($headers, NULL, 'A1');
             $sheet2->fromArray($headers, NULL, 'A1');
             $row = 2;
