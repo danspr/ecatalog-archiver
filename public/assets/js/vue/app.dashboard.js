@@ -11,7 +11,7 @@ createApp({
                 overview: { label: [], tniAD: [], tniAU: [], tniAL: [] },
                 activity: []
             },
-            form: { overviewPeriod: 'last_week' },
+            form: { overviewPeriod: 'last_year' },
             chart: { overview: null, loading: false },
             activity: { loading: false}, currentYear: '',
         }
