@@ -24,8 +24,7 @@
                             User List
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-sm btn-primary btn-wave waves-light"  data-bs-toggle="modal"
-                            data-bs-target="#userNewModal"><i class="ri-add-line fw-semibold align-middle me-1"></i> Create User</button>
+                            <button class="btn btn-sm btn-primary btn-wave waves-light"  @click="showNewUserModal()"><i class="ri-add-line fw-semibold align-middle me-1"></i> Create User</button>
                         </div>
                     </div>
                     <div class="card-body">

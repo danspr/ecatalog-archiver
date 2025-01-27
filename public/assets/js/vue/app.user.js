@@ -52,6 +52,10 @@ createApp({
                 axiosErrorCallback(error);
             })
         },
+        showNewUserModal() {
+            this.form = { id: '', full_name: '', username: '', password: '', role: '', status: '' }
+            $('#userNewModal').modal('show');
+        },
         createNewUser() {
             let self = this
             if(this.form.full_name == '' || this.form.username == '' || this.form.password == '' || this.form.role == '' || this.form.status == '') {
@@ -125,6 +129,7 @@ createApp({
             }
         },
         showPasswordModal(id) {
+            this.formPass = { id: '', password: '', password_confirm: '' }
             this.formPass.id = id
             $('#userPasswordModal').modal('show')
         },
