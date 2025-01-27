@@ -15,6 +15,7 @@ class User extends \App\Controllers\BaseController
         $this->auth->isSessionExist();
         $this->userModel = new UserModel;
         $this->session = session();
+        $this->activity = new ActivityLog;
     }
 
     public function getUserList(){
