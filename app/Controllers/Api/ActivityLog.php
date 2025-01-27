@@ -26,7 +26,7 @@ class ActivityLog extends \App\Controllers\BaseController
             ];
 
             $activityLogModel = new ActivityLogModel();
-            $result = $activityLogModel->where($where)->get()->getResultArray();
+            $result = $activityLogModel->where($where)->orderBy('created', 'DESC')->get()->getResultArray();
 
             $response = [
                 'status' => 'success',

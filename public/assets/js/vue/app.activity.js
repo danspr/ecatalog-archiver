@@ -37,7 +37,7 @@ createApp({
                 $('#activityTable').DataTable({
                     "responsive": true,
                     "processing": true, 
-                    "order": [],
+                    "order": [0, 'asc'],
                     "columnDefs": [
                         {"targets": [ -1 ],
                         "orderable": false
